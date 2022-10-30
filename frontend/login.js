@@ -39,28 +39,18 @@ router.post('/getScore', (req, res) => {
 })
 
 router.post('/editPersonInfo', (req, res) => {
-    const { username, password, id } = req.body;
+    const { username, password } = req.body;
     let sql = "select * from frontendUser";
     connection.query(sql, (err, data) => {
-        const resData = JSON.parse(JSON.stringify(data));
-        let result = resData.some(item => {
-            if (item.username == username) {
-                res.send({ code: 400, messgae: '该用户已经存在' });
-                return true;
+        let sql = `update frontendUser set password='${password}' where username='${username}'`;
+        connection.query(sql, (err, data) => {
+            if (!err) {
+                res.send({ code: 200, message: '更新个人信息成功' })
+            } else {
+                res.send({ code: 403, message: '更新个人信息失败' })
             }
         })
-        if (!result) {
-            let sql = `update frontendUser set username='${username}' ,password='${password}' where id=${id}`;
-            connection.query(sql, (err, data) => {
-                if (!err) {
-                    res.send({ code: 200, message: '更新个人信息成功' })
-                } else {
-                    res.send({ code: 403, message: '更新个人信息失败' })
-                }
-            })
-        }
     })
 })
-
 
 export default router

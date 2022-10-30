@@ -6,6 +6,7 @@ import register from './frontend/register'
 import wareHouse from './frontend/wareHouse'
 import upload from './backend/upload';
 import beVip from './frontend/beVip'
+import news from './frontend/news'
 import community from './frontend/community'
 import projectSupply from './frontend/projectSupply'
 import personRoom from './frontend/personRoom'
@@ -46,6 +47,7 @@ app.use(userManager)
 app.use(dataManager)
 app.use(needManager)
 app.use(communityManager)
+app.use(news)
 
 app.use(function (req, res) {
     res.send('404 not found');
