@@ -70,8 +70,8 @@ router.post('/api/queryOrder', (req, res) => {
         'out_trade_no': `${out_trade_no}`,
         'trade_no': `${trade_no}`
     });
-    const result = alipaySdk.exec(  // result 为可以跳转到支付链接的 url
-        'alipay.trade.query', // 统一收单下单并支付页面接口
+    const result = alipaySdk.exec(
+        'alipay.trade.query',
         {}, // api 请求的参数（包含“公共请求参数”和“业务参数”）
         { formData: formData },
     );
@@ -82,7 +82,6 @@ router.post('/api/queryOrder', (req, res) => {
         }).then(data => {
             let r = data.data.alipay_trade_query_response
             if (r.code === '10000') {
-                console.log(r.trade_status)
                 switch (r.trade_status) {
                     case 'WAIT_BUYER_PAY':
                         res.send({
